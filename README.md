@@ -1,355 +1,149 @@
-# 🚦 AI-Based Traffic Control System
+# AI-Based Traffic Control System
 
-A Python and Pygame-based simulation of a four-way road intersection with dynamically controlled traffic signals. The system estimates traffic demand from waiting vehicles and adjusts green-light duration accordingly.
+A Python and Pygame simulation of a four-way road intersection featuring dynamically controlled traffic signals. Vehicles arrive from the north, south, east, and west approaches, while the controller estimates demand from waiting vehicles and dynamically adjusts green-light durations.
 
-> **Note:** This project is a simulation and a rule-based traffic-management prototype. The current implementation does not use a trained machine-learning model, computer vision, or live traffic-sensor data.
-
----
-
-## 📌 Table of Contents
-
-* [Features](#-features)
-* [Technologies Used](#-technologies-used)
-* [Project Structure](#-project-structure)
-* [Requirements](#-requirements)
-* [Installation and Setup](#-installation-and-setup)
-* [How to Run](#-how-to-run)
-* [How It Works](#-how-it-works)
-* [On-Screen Statistics](#-on-screen-statistics)
-* [Configuration](#-configuration)
-* [Limitations](#-limitations)
-* [Troubleshooting](#-troubleshooting)
-* [Future Improvements](#-future-improvements)
+> **Note:** This is a rule-based traffic-management prototype simulation. The current implementation does not utilize a trained machine-learning model, computer vision, or live traffic-sensor data.
 
 ---
 
 ## ✨ Features
 
-* **Four-Way Intersection:** Simulates traffic arriving from the north, south, east, and west.
-* **Dynamic Signal Timing:** Adjusts green-light duration according to the number of waiting vehicles.
-* **Opposite-Direction Phases:** Serves north and south together, followed by east and west.
-* **Vehicle Generation:** Spawns vehicles at random intervals with different speeds and colors.
-* **Basic Vehicle Spacing:** Vehicles check the vehicle ahead to reduce overlapping while approaching the intersection.
-* **Turning Behavior:** Vehicles are randomly assigned straight, left, or right movements, with probabilities of 70%, 15%, and 15%, respectively.
-* **Live Visual Dashboard:** Displays vehicle counts, waiting vehicles, traffic-light states, assigned green times, and the active phase.
-* **Keyboard Controls:** Press `Esc` to close the simulation.
+* **Four-Way Intersection:** Simultaneously simulates north, south, east, and west traffic approaches.
+* **Dynamic Signal Timing:** Green duration scales automatically based on the number of currently waiting vehicles.
+* **Opposite-Direction Phases:** North and south are served in tandem, followed by east and west.
+* **Vehicle Generation:** Spawns vehicles at random intervals with varied speeds, colors, and movement behaviors.
+* **Basic Vehicle Spacing:** Vehicles monitor the vehicle directly ahead to reduce overlap during approach.
+* **Turning Behavior:** Each vehicle is randomly assigned a movement direction:
+  * Straight: 70%
+  * Left turn: 15%
+  * Right turn: 15%
+* **Live Visual Dashboard:** Displays per-lane vehicle counts, waiting counts, current signal states, assigned green time, and the active phase.
+* **Quick Exit:** Press `Esc` or close the window anytime to exit the simulation.
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack & Requirements
 
-* **Programming Language:** Python 3
-* **Graphics and Simulation:** [Pygame](https://www.pygame.org/)
-* **Concurrency:** Python `threading` module
-* **Time Management:** Python `time` module
+* **Language:** Python 3.8 or newer
+* **Graphics & Animation:** [Pygame](https://www.pygame.org/) (Version `2.5.2` recommended)
+* **Concurrency:** Python built-in `threading` and `time` modules for the signal-control loop
+* **Environment:** A desktop environment with graphical display support (headless environments do not support Pygame windows).
 
 ---
 
 ## 📂 Project Structure
 
-The project is organized into the following files:
-
 ```text
 AI-Based-Traffic-Control-System/
-│
-├── main.py                 # Application entry point
-├── simulation.py           # Simulation window, vehicle spawning, updates, and dashboard
-├── traffic_controller.py   # Traffic-demand calculation and signal-phase scheduling
-├── traffic_signal.py       # Traffic-light states, timers, and rendering
-├── vehicle.py              # Vehicle movement, turning behavior, and rendering
-├── requirements.txt        # Python dependencies
-└── README.md               # Project documentation
+├── main.py                  # Application entry point
+├── simulation.py            # Pygame window, intersection, spawning, updates, and UI
+├── traffic_controller.py    # Demand calculation and signal-phase scheduling
+├── traffic_signal.py        # Traffic-light state, timer, and drawing
+├── vehicle.py               # Vehicle movement, turning behavior, and rendering
+├── requirements.txt         # Python dependency list
+└── README.md                # Project documentation
 ```
 
 ---
 
-## 📋 Requirements
+## 🚀 Setup and Run
 
-Before running the project, make sure you have the following:
+### 1. Extract the Project
+Extract the project archive and open your terminal inside the root project directory (where `main.py` is located).
 
-* Python 3.8 or newer
-* PIP package manager
-* A desktop environment that supports graphical applications
-
-### Python Dependencies
-
-The project uses the following dependency:
-
-```text
-pygame==2.5.2
-```
-
-The dependency is listed in `requirements.txt`.
-
----
-
-## ⚙️ Installation and Setup
-
-Follow these steps to set up the project on your computer.
-
-### 1. Clone the Repository
-
-Open a terminal and run:
-
-```bash
-git clone https://github.com/surjeetmaini8/AI-Based-Traffic-Control-System.git
-```
-
-### 2. Navigate to the Project Directory
-
-```bash
-cd AI-Based-Traffic-Control-System
-```
-
-### 3. Create a Virtual Environment
-
-A virtual environment is recommended to keep project dependencies separate.
-
-**Windows PowerShell:**
-
+### 2. Create a Virtual Environment (Recommended)
+**Windows (PowerShell):**
 ```powershell
 python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
-Activate the environment:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-**macOS or Linux:**
-
+**macOS / Linux:**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 4. Install Dependencies
-
-Run:
-
+### 3. Install Dependencies
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-If `requirements.txt` is unavailable or installation fails because the dependency is missing, you can install Pygame directly:
-
-```bash
-python -m pip install pygame==2.5.2
-```
-
----
-
-## ▶️ How to Run
-
-After installing the dependencies, start the application with:
-
+### 4. Start the Simulation
 ```bash
 python main.py
 ```
-
-A Pygame window titled **AI-Based Traffic Management System** should open.
-
-The simulation displays a four-way intersection, moving vehicles, traffic signals, and traffic statistics.
-
-**To exit the simulation:**
-
-* Press `Esc`, or
-* Close the application window.
+A window titled **AI-Based Traffic Management System** will launch. Press **Esc** or close the window to exit.
 
 ---
 
-## 🧠 How It Works
+## 💡 How It Works
 
-The system consists of four main components.
+### Simulation Loop (`main.py` & `simulation.py`)
+`main.py` initializes a `Simulation` instance with a 1200 × 800 window and enters the main game loop targeting 60 frames per second. `simulation.py` handles intersection rendering, lane setup, vehicle spawning, position updates, and UI statistics overlays.
 
-### 1. Simulation Management
+### Vehicle Movement (`vehicle.py`)
+Each vehicle tracks its lane, position, speed, color, and turn direction. Vehicles move along their approach, check spacing relative to the vehicle ahead, and are automatically removed once they exit the screen boundaries.
 
-**File:** `simulation.py`
+### Signal Control (`traffic_controller.py`)
+A daemon thread executes the signal control loop, alternating between two primary phases:
+1. **North + South**
+2. **East + West**
 
-This module manages the simulation environment, including:
+The controller counts waiting vehicles for opposing pairs, calculates a dynamic green duration, and switches active signals while managing yellow transition states. 
 
-* Initializing the intersection and traffic lanes.
-* Creating traffic signals and the traffic controller.
-* Spawning vehicles at regular intervals.
-* Updating vehicle positions.
-* Rendering the road, vehicles, traffic signals, and dashboard.
-
-The display loop targets 60 frames per second.
-
-### 2. Vehicle Movement
-
-**File:** `vehicle.py`
-
-Each vehicle has its own lane, position, speed, color, and randomly assigned turning direction.
-
-Vehicles move along their approach, check the spacing between themselves and the vehicle ahead, and are removed when they leave the screen.
-
-### 3. Traffic Signal Control
-
-**File:** `traffic_controller.py`
-
-The controller uses a rule-based approach to estimate traffic demand and determine green-light duration.
-
-It manages two traffic phases:
-
-1. **North–South Phase:** Northbound and southbound traffic are served together.
-2. **East–West Phase:** Eastbound and westbound traffic are served together.
-
-The controller counts waiting vehicles in each opposing pair and uses the combined count to determine the green-light duration.
-
-When a phase ends, the system performs a yellow-light transition before proceeding.
-
-The configured timing values are:
-
-| Setting            |   Duration |
-| ------------------ | ---------: |
-| Minimum green time | 15 seconds |
-| Maximum green time | 45 seconds |
-| Yellow transition  |  2 seconds |
-
-The green-time calculation uses different scaling ranges for low, medium, and high traffic demand.
-
-When neither approach in a phase has detected waiting vehicles, the controller briefly waits before continuing its phase cycle.
-
-### 4. Traffic Signal Display
-
-**File:** `traffic_signal.py`
-
-This module manages the visual representation of each traffic signal.
-
-It tracks the signal state:
-
-* `RED`
-* `YELLOW`
-* `GREEN`
-
-It also displays a countdown while the signal is green.
+| Setting | Value |
+| :--- | ---: |
+| **Minimum green time** | 15 seconds |
+| **Maximum green time** | 45 seconds |
+| **Yellow transition** | 2 seconds |
 
 ---
 
-## 📊 On-Screen Statistics
+## 📊 On-Screen Statistics Dashboard
 
-The simulation dashboard displays the following information for each direction:
-
-| Statistic   | Description                                            |
-| ----------- | ------------------------------------------------------ |
-| Vehicles    | Total vehicles currently tracked in the lane           |
-| Waiting     | Vehicles currently marked as stopped                   |
-| Signal      | Current traffic-light state                            |
-| Green Time  | Assigned green duration and approximate remaining time |
-| Active Lane | Currently selected direction or direction pair         |
-
-These statistics help visualize how the traffic controller responds to changing traffic demand.
+The live dashboard displays key metrics for each direction:
+* **Vehicles:** Total vehicles currently tracked in the lane.
+* **Waiting:** Vehicles flagged as stopped by movement logic.
+* **Signal:** Current traffic-light state (`RED`, `YELLOW`, or `GREEN`).
+* **Green Time:** Assigned green duration and approximate remaining countdown while green.
+* **Active Lane:** The currently selected direction pair.
 
 ---
 
-## 🔧 Configuration
+## ⚙️ Configuration Options
 
-You can experiment with different traffic conditions by changing the default values in the source code.
-
-| Parameter                     | Default Value | File                    |
-| ----------------------------- | ------------- | ----------------------- |
-| Window width                  | 1200 pixels   | `main.py`               |
-| Window height                 | 800 pixels    | `main.py`               |
-| Target frame rate             | 60 FPS        | `simulation.py`         |
-| Vehicle spawn interval        | 1.5 seconds   | `simulation.py`         |
-| Spawn probability per lane    | 0.7           | `simulation.py`         |
-| Vehicle speed                 | 1.5–3.0       | `vehicle.py`            |
-| Minimum green time            | 15 seconds    | `traffic_controller.py` |
-| Maximum green time            | 45 seconds    | `traffic_controller.py` |
-| Yellow transition             | 2 seconds     | `traffic_controller.py` |
-| Straight movement probability | 70%           | `vehicle.py`            |
-| Left-turn probability         | 15%           | `vehicle.py`            |
-| Right-turn probability        | 15%           | `vehicle.py`            |
-
-**Note:** These values describe the documented configuration. Check the actual source files before changing them, as the implementation may differ.
+You can customize simulation parameters directly in the source files:
+* **Window Size:** Modify `Simulation(width=1200, height=800)` in `main.py`.
+* **Frame Rate:** Adjust `self.fps = 60` in `simulation.py`.
+* **Spawn Rate:** Tweak `self.spawn_interval = 1.5` and `self.spawn_probability = 0.7`.
+* **Vehicle Speed:** Range between `1.5` and `3` in `vehicle.py`.
+* **Signal Timings:** Modify `min_green_time`, `max_green_time`, and `yellow_time` in `traffic_controller.py`.
 
 ---
 
 ## ⚠️ Limitations
 
-The current implementation has several limitations:
-
-* **No Trained AI/ML Model:** Traffic signal timing is determined by predefined rules rather than a trained machine-learning model.
-* **No Real-Time Traffic Data:** Traffic demand is estimated from simulated vehicles rather than real-world cameras or sensors.
-* **Simplified Traffic Behavior:** Vehicle movement, turning paths, collision handling, and right-of-way rules are simplified.
-* **Limited Signal Phases:** Opposite directions are always served together.
-* **No Pedestrian Signals:** Pedestrian crossings and dedicated pedestrian phases are not implemented.
-* **Simulation Only:** The project is intended for demonstration and experimentation, not for controlling real-world traffic signals.
-
-A real-world deployment would require substantial redesign, rigorous safety testing, and appropriate certification.
+* **Rule-Based Prototype:** The controller relies on heuristics rather than a trained machine-learning model or live camera feeds.
+* **Demand Estimation:** Traffic demand is estimated via internal `stopped` flags rather than physical sensors.
+* **Simplified Physics:** Intersection flow, turning paths, collision handling, and right-of-way rules are simplified for demonstration.
+* **Strict Pairing:** Opposite approaches are always served as a pair; independent lane scheduling or pedestrian phases are not included.
 
 ---
 
-## 🐛 Troubleshooting
+## 🔍 Troubleshooting
 
-### 1. `ModuleNotFoundError: No module named 'pygame'`
-
-Install the required dependencies:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-If the error persists, verify that your virtual environment is activated and that Pygame is installed in the same Python environment used to run the project.
-
-### 2. The Simulation Window Does Not Open
-
-Make sure you are running the project in a desktop environment that supports graphical applications. Headless environments may not support Pygame windows.
-
-### 3. Python Command Not Found
-
-Try:
-
-```bash
-python3 --version
-```
-
-Depending on your operating system, you may need to use `python3` instead of `python`.
-
-On Windows, you can also check:
-
-```powershell
-py --version
-```
-
-### 4. The Simulation Closes Immediately
-
-Run the application from a terminal:
-
-```bash
-python main.py
-```
-
-Check the terminal output for error messages.
+* **`ModuleNotFoundError: No module named 'pygame'`:** Ensure your virtual environment is activated and run `python -m pip install -r requirements.txt`.
+* **Window Fails to Open:** Run the script in a desktop session with graphical display support. Headless servers cannot render Pygame windows.
+* **`python` Command Not Found:** Try running `python3 main.py` depending on your OS configuration.
+* **Simulation Closes Immediately:** Run the script from a terminal window to inspect any runtime error traces.
 
 ---
 
-## 🚀 Future Improvements
+## 🔮 Possible Improvements
 
-The project could be extended with the following features:
-
-* Integrate a genuine AI/ML model for traffic-demand prediction.
-* Add computer vision to estimate vehicle counts from traffic-camera footage.
-* Record traffic throughput, average waiting time, queue length, and signal-phase history.
-* Compare dynamic signal timing against a fixed-time traffic-control strategy.
-* Improve vehicle turning paths, lane geometry, and collision avoidance.
-* Introduce dedicated pedestrian crossings and pedestrian signal phases.
-* Add configurable simulation parameters through a settings panel.
-* Develop automated tests for green-time calculations and signal-phase safety.
-* Evaluate the controller using repeatable traffic scenarios and quantitative performance metrics.
-
-
-
-## 👨‍💻 Author
-
-**Surjeet Maini**
-
-GitHub: [@surjeetmaini8](https://github.com/surjeetmaini8)
-
-**Repository:** [AI-Based-Traffic-Control-System](https://github.com/surjeetmaini8/AI-Based-Traffic-Control-System)
-
----
-
-⭐ If you find this project interesting, consider starring the repository on GitHub.
+* Add a configuration settings panel or command-line arguments for easy parameter tuning.
+* Implement performance metrics recording (throughput, average wait time, queue lengths).
+* Compare dynamic signal policies against a fixed-time baseline.
+* Enhance turning paths, multi-lane geometry, and collision management.
+* Integrate and evaluate a genuine machine-learning or reinforcement-learning model.
